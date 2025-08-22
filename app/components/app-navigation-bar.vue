@@ -19,6 +19,7 @@
     </div>
 
     <div class="navbar-end">
+      <ThemeToggle />
       <ul class="menu menu-horizontal px-1 hidden lg:flex">
         <li><a>About Page</a></li>
       </ul>

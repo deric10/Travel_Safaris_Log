@@ -15,10 +15,14 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/icon",
     "@nuxt/image",
+    "@nuxtjs/color-mode",
   ],
   eslint: {
     config: {
       standalone: false,
     },
+  },
+  colorMode: {
+    dataValue: "theme",
   },
 });
