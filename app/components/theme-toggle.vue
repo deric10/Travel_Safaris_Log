@@ -14,6 +14,7 @@ const isDark = computed({
 <template>
   <label class="swap swap-rotate mx-4">
     <input v-model="isDark" type="checkbox">
-    <Icon name="tabler:sun" size="26">
-      <Icon name="tabler:moon" size="26" /></icon></label>
+    <Icon name="tabler:sun" size="26" />
+    <Icon name="tabler:moon" size="26" />
+  </label>
 </template>
