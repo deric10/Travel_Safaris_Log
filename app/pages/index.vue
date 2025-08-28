@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import AppAuthButton from "~/components/app-auth-button.vue";
+</script>
+
 <template>
   <div>
     <AppNavigationBar />
@@ -15,10 +19,7 @@
             <p class="mb-5 mt-3">
               Explore Zanzibar your way with ZANZI-TOUR — discover, mark, and share every place you visit. Create your personal Zanzibar map and relive your adventures anytime. Start your journey today!
             </p>
-            <button class="btn btn-primary px-5">
-              <Icon name="tabler:brand-github" size="20" class="mr-1" />
-              Sign In
-            </button>
+            <AppAuthButton />
           </div>
         </div>
       </div>

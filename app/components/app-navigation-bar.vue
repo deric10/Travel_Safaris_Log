@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import AppAuthButton from "./app-auth-button.vue";
+</script>
+
 <template>
   <div class="navbar bg-base-100 shadow-sm">
     <div class="navbar-start">
@@ -23,9 +27,11 @@
       <ul class="menu menu-horizontal px-1 hidden lg:flex">
         <li><a>About Page</a></li>
       </ul>
-      <a class="btn">
+      <AppAuthButton />
+      <!-- <a class="btn"
+      >
         <Icon name="tabler:brand-github" size="20" class="mr-1" />
-        Sign In</a>
+        Sign In</a> -->
     </div>
   </div>
 </template>
