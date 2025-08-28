@@ -10,7 +10,6 @@
         <div class="hero-content text-neutral-content text-center">
           <div class=" bg-cyan-950 py-4 px-7 rounded-lg">
             <h1 class="text-2xl font-bold text-amber-700">
-              <span class="block"> <Icon name="tabler:brand-strava" size="60" /> </span>
               ZANZI-TOUR
             </h1>
             <p class="mb-5 mt-3">
