@@ -4,7 +4,6 @@ import AppAuthButton from "~/components/app-auth-button.vue";
 
 <template>
   <div>
-    <AppNavigationBar />
     <div class="container mx-auto">
       <div
         class="hero min-h-[40vh] "

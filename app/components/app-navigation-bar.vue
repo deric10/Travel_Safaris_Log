@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import AppAuthButton from "./app-auth-button.vue";
+
+const authStore = useAuthStores();
 </script>
 
 <template>
@@ -27,11 +29,26 @@ import AppAuthButton from "./app-auth-button.vue";
       <ul class="menu menu-horizontal px-1 hidden lg:flex">
         <li><a>About Page</a></li>
       </ul>
-      <AppAuthButton />
-      <!-- <a class="btn"
-      >
-        <Icon name="tabler:brand-github" size="20" class="mr-1" />
-        Sign In</a> -->
+
+      <div v-if="!authStore.loading && authStore.user" class="dropdown  dropdown-end">
+        <div tabindex="0" role="button" class="btn m-1">
+          <div v-if="authStore.user.image" class="avatar mr-1.5">
+            <div class="ring-cyan-950 ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
+              <img :src="authStore.user.image">
+            </div>
+          </div>
+          {{ authStore.user.name }}
+        </div>
+        <ul tabindex="0" class="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow-sm">
+          <li>
+            <button @click="authStore.signOut()">
+              <Icon name="tabler:logout-2" size="24" />
+              Sign Out
+            </button>
+          </li>
+        </ul>
+      </div>
+      <AppAuthButton v-else />
     </div>
   </div>
 </template>

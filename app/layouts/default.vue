@@ -1,5 +1,6 @@
 <template>
   <div class="flext min-h-screen flex-col px-5 py-3">
+    <AppNavigationBar />
     <div>
       <slot />
     </div>
