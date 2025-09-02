@@ -1,0 +1,49 @@
+import { and, eq } from "drizzle-orm";
+import { customAlphabet } from "nanoid";
+
+import db from "~/lib/db/index";
+
+import type { locationInsertSchemaType } from "../schema/location";
+
+import { location } from "../schema/location";
+
+export async function findLocationByName(existing: locationInsertSchemaType, userId: number) {
+  return db.query.location.findFirst({
+    where: and(
+      eq(location.name, existing.name),
+      eq(location.userId, userId),
+    ),
+  });
+}
+
+export async function findLocationBySlug(originalSlug: string) {
+  return await db.query.location.findFirst({
+    where: eq(location.slug, originalSlug),
+  });
+}
+
+export async function findUniqueSlug(slug: string) {
+  const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 6);
+  let existing = !!(await findLocationBySlug(slug));
+
+  while (existing) {
+    const id = nanoid();
+    const idSlug = `${slug}-${id}`;
+    existing = !!(await findLocationBySlug(idSlug));
+    if (!existing) {
+      return idSlug;
+    }
+  }
+
+  return slug;
+}
+
+export async function insertLocation(insertable: locationInsertSchemaType, userId: number, slug: string) {
+  const [created] = await db.insert(location).values({
+    ...insertable,
+    slug,
+    userId,
+  }).returning();
+
+  return created;
+}
