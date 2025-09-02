@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
+    "nuxt-csurf",
   ],
   eslint: {
     config: {

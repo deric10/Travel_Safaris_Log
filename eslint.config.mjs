@@ -16,6 +16,19 @@ export default withNuxt(
     },
     ignores: [".pnpm-store/", "**/migrations/*"],
     rules: {
+      "vue/max-attributes-per-line": [
+        "error",
+        {
+          singleline: {
+            max: 3,
+          },
+          multiline: {
+            max: 1,
+          },
+        },
+      ],
+      "vue/require-default-prop": "off",
+      "vue/require-explicit-emits": "off",
       "ts/no-redeclare": "off",
       "ts/consistent-type-definitions": ["error", "type"],
       "no-console": ["warn"],
