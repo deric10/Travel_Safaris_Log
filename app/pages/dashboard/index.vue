@@ -14,7 +14,7 @@ onMounted(() => {
       <span class="loading loading-bars loading-xl" />
     </div>
     <div v-else-if="locations && locations.length > 0" class="flex flex-wrap gap-3 mt-4 px-2">
-      <div v-for="loc in locations" :key="loc.id" class="card bg-base-300 w-73 border-1 shadow-sm ">
+      <div v-for="loc in locations" :key="loc.id" class="card bg-base-300 w-62 border-1 shadow-sm ">
         <div class="card-body">
           <h3 class="card-title">
             {{ loc.name }}

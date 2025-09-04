@@ -72,7 +72,13 @@ const sidebarStore = useSidebarStore();
       />
     </div>
     <div class="flex flex-1 justify-center align-middle">
-      <NuxtPage />
+      <div class="flex-1 flex flex-col my-3 px-4 gap-4">
+        <NuxtPage />
+        <div class="divider" />
+        <AppMap
+          class="flex-1"
+        />
+      </div>
     </div>
   </div>
 </template>
