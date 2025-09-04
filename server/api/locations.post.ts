@@ -4,8 +4,9 @@ import slugify from "slugify";
 
 import { locationInsertSchema } from "@/lib/db/schema/location";
 import { findLocationByName, findUniqueSlug, insertLocation } from "~/lib/db/queries/location";
+import defineAuthEventHandler from "~/shared/utils/define-auth-even-thandle";
 
-export default defineEventHandler(async (event) => {
+export default defineAuthEventHandler(async (event) => {
   const result = await readValidatedBody(event, locationInsertSchema.safeParse);
   if (!event.context.user) {
     return sendError(event, createError({

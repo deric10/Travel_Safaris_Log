@@ -7,6 +7,15 @@ import type { locationInsertSchemaType } from "../schema/location";
 
 import { location } from "../schema/location";
 
+export async function findLocations(userId: number) {
+  return db.query.location.findMany({
+    where: eq(location.userId, userId),
+    orderBy: (location, { desc }) => [
+      desc(location.createdAt),
+    ],
+  });
+}
+
 export async function findLocationByName(existing: locationInsertSchemaType, userId: number) {
   return db.query.location.findFirst({
     where: and(

@@ -113,6 +113,7 @@ function cancelLeave() {
         :disabled="loading"
       />
       <AppFormField
+        id="latitude"
         name="lat"
         label="Latitude"
         type="number"
@@ -121,6 +122,7 @@ function cancelLeave() {
         :disabled="loading"
       />
       <AppFormField
+        id="longitude"
         name="long"
         label="Longitude"
         type="number"
