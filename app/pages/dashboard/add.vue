@@ -39,7 +39,7 @@ const onSubmit = handleSubmit(async (values) => {
     if (error.data?.data) {
       setErrors(error.data?.data);
     }
-    submitError.value = error.data.statusMessag || error.statusMessage || "An known error occurred";
+    submitError.value = error.data.data.statusMessag || error.statusMessage || "An known error occurred";
   }
   loading.value = false;
 });
