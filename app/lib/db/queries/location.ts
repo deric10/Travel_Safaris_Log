@@ -24,13 +24,13 @@ export async function findLocationBySlug(originalSlug: string) {
 
 export async function findUniqueSlug(slug: string) {
   const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 6);
-  let existing = !!(await findLocationBySlug(slug));
+  let existingSlug = !!(await findLocationBySlug(slug));
 
-  while (existing) {
+  while (existingSlug) {
     const id = nanoid();
     const idSlug = `${slug}-${id}`;
-    existing = !!(await findLocationBySlug(idSlug));
-    if (!existing) {
+    existingSlug = !!(await findLocationBySlug(idSlug));
+    if (!existingSlug) {
       return idSlug;
     }
   }

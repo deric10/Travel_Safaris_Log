@@ -1,6 +1,5 @@
 import type z from "zod";
 
-// Database table schema
 import { int, real, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 
