@@ -20,7 +20,11 @@ const authStore = useAuthStores();
             <p class="mb-5 mt-3">
               Explore Zanzibar your way with ZANZI-TOUR — discover, mark, and share every place you visit. Create your personal Zanzibar map and relive your adventures anytime. Start your journey today!
             </p>
-            <NuxtLink v-if="authStore.user" to="/dashboard" class="btn px-2 ">
+            <NuxtLink
+              v-if="authStore.user"
+              to="/dashboard"
+              class="btn px-2 "
+            >
               Continue Logging
             </NuxtLink>
             <AppAuthButton v-else />

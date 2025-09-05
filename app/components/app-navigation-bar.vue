@@ -8,7 +8,11 @@ const authStore = useAuthStores();
   <div class="navbar bg-base-100 shadow-sm">
     <div class="navbar-start">
       <div class="dropdown">
-        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <div
+          tabindex="0"
+          role="button"
+          class="btn btn-ghost lg:hidden"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -42,7 +46,11 @@ const authStore = useAuthStores();
       </ul>
 
       <div v-if="!authStore.loading && authStore.user" class="dropdown  dropdown-end">
-        <div tabindex="0" role="button" class="btn m-1">
+        <div
+          tabindex="0"
+          role="button"
+          class="btn m-1"
+        >
           <div v-if="authStore.user.image" class="avatar mr-1.5">
             <div class="ring-cyan-950 ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
               <img :src="authStore.user.image">

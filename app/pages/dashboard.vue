@@ -21,7 +21,7 @@ const sidebarStore = useSidebarStore();
 <template>
   <div class="flex-1 flex">
     <!-- SideBar -->
-    <div class="bg-base-100 transition-all duration-300 " :class="{ 'w-64': isSideBarOpen, 'w-16': !isSideBarOpen }">
+    <div class="bg-base-100 transition-all duration-300 shrink-0 " :class="{ 'w-64': isSideBarOpen, 'w-16': !isSideBarOpen }">
       <div class="flex p-2" :class="{ 'justify-center': !isSideBarOpen, 'justify-end': isSideBarOpen }">
         <Icon
           v-if="isSideBarOpen"
@@ -71,8 +71,8 @@ const sidebarStore = useSidebarStore();
         href=""
       />
     </div>
-    <div class="flex flex-1 justify-center align-middle">
-      <div class="flex-1 flex flex-col my-3 px-4 gap-4">
+    <div class="flex flex-1 justify-center align-middle overflow-auto">
+      <div class="flex flex-col my-3 px-4 gap-4 size-full">
         <NuxtPage />
         <div class="divider" />
         <AppMap

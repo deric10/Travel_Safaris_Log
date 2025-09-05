@@ -13,8 +13,12 @@ onMounted(() => {
     <div v-if="status === 'pending'">
       <span class="loading loading-bars loading-xl" />
     </div>
-    <div v-else-if="locations && locations.length > 0" class="flex flex-wrap gap-3 mt-4 px-2">
-      <div v-for="loc in locations" :key="loc.id" class="card bg-base-300 w-62 border-1 shadow-sm ">
+    <div v-else-if="locations && locations.length > 0" class="flex flex-nowrap gap-3 mt-4 px-2 overflow-auto">
+      <div
+        v-for="loc in locations"
+        :key="loc.id"
+        class="card bg-base-300 w-62 border-1 shadow-sm shrink-0"
+      >
         <div class="card-body">
           <h3 class="card-title">
             {{ loc.name }}
@@ -42,7 +46,11 @@ onMounted(() => {
         to="/dashboard/add"
         class="btn btn-primary w-fit"
       >
-        <Icon name="tabler:circle-plus-filled" size="24" class="inline-block mr-1" />
+        <Icon
+          name="tabler:circle-plus-filled"
+          size="24"
+          class="inline-block mr-1"
+        />
         Add Locations
       </NuxtLink>
     </div>

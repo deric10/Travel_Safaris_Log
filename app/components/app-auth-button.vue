@@ -3,7 +3,11 @@ const authStore = useAuthStores();
 </script>
 
 <template>
-  <button class="btn" :disabled="authStore.loading" @click="authStore.signIn">
+  <button
+    class="btn"
+    :disabled="authStore.loading"
+    @click="authStore.signIn"
+  >
     <span v-if="authStore.loading" class="loading loading-spinner loading-md" />
     <Icon
       v-else

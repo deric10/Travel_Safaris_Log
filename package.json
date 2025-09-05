@@ -13,6 +13,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@indoorequal/vue-maplibre-gl": "^8.4.2",
     "@libsql/client": "^0.15.12",
     "@nuxt/eslint": "1.8.0",
     "@nuxt/fonts": "0.11.4",
