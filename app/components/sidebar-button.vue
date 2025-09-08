@@ -7,6 +7,7 @@ const props = withDefaults(defineProps<{
   icon: string;
   href: string;
   showLabel?: boolean;
+  iconColor?: "text-accent" | "text-secondary" | "text-primary";
 }>(), {
   showLabel: true,
 });
@@ -33,6 +34,7 @@ const isActive = computed(() => route.path === props.href);
       >
         <Icon
           :name="props.icon"
+          :class="props.iconColor"
           size="24"
           class="transition-transform duration-200 ease-out group-hover:translate-x-0.5"
         />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CENTER_TANZANIA } from "~/lib/constants";
+import { CENTER_TANZANIA, ZOOM_LEVEL } from "~/lib/constants";
 
 const colorMode = useColorMode();
 const mapStore = useMapStore();
@@ -9,7 +9,6 @@ const style = computed(() => {
     ? "/styles/dark.json"
     : "https://tiles.openfreemap.org/styles/liberty";
 });
-const zoom = 3;
 
 onMounted(() => {
   mapStore.initMap();
@@ -20,7 +19,7 @@ onMounted(() => {
   <MglMap
     :map-style="style"
     :center="CENTER_TANZANIA"
-    :zoom="zoom"
+    :zoom="ZOOM_LEVEL"
   >
     <MglNavigationControl />
     <MglMarker
@@ -29,10 +28,31 @@ onMounted(() => {
       :coordinates="[point.lat, point.long]"
     >
       <template #marker>
-        <div class="tooltip" :data-tip="point.label">
-          <Icon name="mdi-map-marker" class="text-3xl text-secondary" />
+        <div
+          class="tooltip"
+          :class="{ 'tooltip-open': mapStore.selectedPoint?.id === point.id }"
+          :data-tip="point.name"
+          @mouseenter="mapStore.selectPointWithoutFlyTo(point)"
+          @mouseleave="mapStore.selectPointWithoutFlyTo(null)
+          "
+        >
+          <Icon
+            name="mdi-map-marker"
+            size="30"
+            :class="mapStore.selectedPoint === point ? 'text-accent' : 'text-secondary'"
+          />
         </div>
       </template>
+      <MglPopup>
+        <div class="p-2">
+          <h3 class="font-bold">
+            {{ point.name }}
+          </h3>
+          <p class="text-sm">
+            {{ point.description }}
+          </p>
+        </div>
+      </MglPopup>
     </MglMarker>
   </MglMap>
 </template>

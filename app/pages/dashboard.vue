@@ -3,6 +3,8 @@ const route = useRoute();
 const locationStore = useLocationStore();
 const isSideBarOpen = ref(true);
 
+const mapStore = useMapStore();
+
 onMounted(() => {
   isSideBarOpen.value = localStorage.getItem("isSidebarOpen") === "true";
   if (route.path === "/dashboard") {
@@ -61,6 +63,9 @@ const sidebarStore = useSidebarStore();
           :icon="item.icon"
           :href="item.href"
           :show-label="isSideBarOpen"
+          :icon-color="mapStore.selectedPoint === item.location ? 'text-accent' : undefined"
+          @mouseenter="mapStore.selectedPoint = item.location ?? null"
+          @mouseleave="mapStore.selectedPoint = null"
         />
       </div>
       <div class="divider" />
@@ -68,7 +73,7 @@ const sidebarStore = useSidebarStore();
         :show-label="isSideBarOpen"
         label="Sign Out"
         icon="tabler:logout-2"
-        href=""
+        href="#"
       />
     </div>
     <div class="flex flex-1 justify-center align-middle overflow-auto">
