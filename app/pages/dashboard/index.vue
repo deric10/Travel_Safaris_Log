@@ -15,7 +15,7 @@ onMounted(() => {
     <div v-if="status === 'pending'">
       <span class="loading loading-bars loading-xl" />
     </div>
-    <div v-else-if="locations && locations.length > 0" class="flex flex-nowrap gap-3 mt-4 px-2 overflow-auto">
+    <div v-else-if="locations && locations.length > 0" class="flex flex-nowrap gap-3 mt-4 px-2 overflow-auto min-h-56">
       <div
         v-for="location in locations"
         :key="location.id"
@@ -25,7 +25,7 @@ onMounted(() => {
         }"
         class="card bg-base-300 w-62 border-2 shadow-sm shrink-0 cursor-pointer"
         @mouseenter="mapStore.selectedPoint = location"
-        @mouseleave="mapStore.selectedPoint = null"
+        @mouseleave="mapStore.selectedPoint = location"
       >
         <div class="card-body">
           <h3 class="card-title">
@@ -37,9 +37,8 @@ onMounted(() => {
           <p class="text-sm">
             Added on {{ new Date(location.createdAt).toLocaleDateString() }}
           </p>
-          <!-- :to="`/dashboard/location/${loc.id}`" -->
           <NuxtLink
-            to="#"
+            :to="{ name: 'dashboard-location-slug', params: { slug: location.slug } }"
             class="btn btn-primary btn-sm mt-2 w-fit"
           >
             View Details

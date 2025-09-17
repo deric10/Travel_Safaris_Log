@@ -7,13 +7,24 @@ import { useForm } from "vee-validate";
 import { ref } from "vue";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 
+import type { NominatimResults } from "~/lib/types";
+
 import { locationInsertSchema } from "@/lib/db/schema/location";
+import { CENTER_TANZANIA } from "~/lib/constants";
+import getFetchErrorMessage from "~/shared/utils/get-fetch-error-messages";
 
 const router = useRouter();
+const mapStore = useMapStore();
 const { $csrfFetch } = useNuxtApp();
 
-const { handleSubmit, errors, meta, setErrors } = useForm({
+const { handleSubmit, errors, meta, setErrors, setFieldValue, controlledValues } = useForm({
   validationSchema: toTypedSchema(locationInsertSchema),
+  initialValues: {
+    name: "",
+    description: "",
+    long: (CENTER_TANZANIA as [number, number])[0],
+    lat: (CENTER_TANZANIA as [number, number])[1],
+  },
 });
 
 const showConfirmModal = ref(false);
@@ -40,7 +51,7 @@ const onSubmit = handleSubmit(async (values) => {
     if (error.data?.data) {
       setErrors(error.data?.data);
     }
-    submitError.value = error?.data?.statusMessage || error?.statusMessage || "An known error occurred";
+    submitError.value = getFetchErrorMessage(error);
   }
   loading.value = false;
 });
@@ -69,6 +80,41 @@ function confirmLeave() {
 function cancelLeave() {
   showConfirmModal.value = false;
 }
+
+function formatNumber(value: number | undefined) {
+  if (!value)
+    return;
+  return value.toFixed(6);
+}
+
+effect(() => {
+  if (mapStore.addedPoint) {
+    setFieldValue("lat", mapStore.addedPoint.lat);
+    setFieldValue("long", mapStore.addedPoint.long);
+  }
+});
+
+function searchResultSelected(result: NominatimResults) {
+  setFieldValue("name", result.name);
+  mapStore.addedPoint = {
+    id: 1,
+    name: "Added Point",
+    description: "",
+    long: Number(result.lon),
+    lat: Number(result.lat),
+    centerMap: true,
+  };
+}
+
+onMounted(() => {
+  mapStore.addedPoint = {
+    id: 1,
+    name: "Added Point",
+    description: "",
+    long: (CENTER_TANZANIA as [number, number])[0],
+    lat: (CENTER_TANZANIA as [number, number])[1],
+  };
+});
 </script>
 
 <template>
@@ -116,7 +162,7 @@ function cancelLeave() {
         :error="errors.description"
         :disabled="loading"
       />
-      <AppFormField
+      <!-- <AppFormField
         id="latitude"
         name="lat"
         label="Latitude"
@@ -133,7 +179,25 @@ function cancelLeave() {
         placeholder="Enter longitude"
         :error="errors.long"
         :disabled="loading"
-      />
+      /> -->
+
+      <p>
+        To set the coordinates
+      </p>
+      <ul class="list-disc ml-4 text-sm">
+        <li>
+          Drag the Marker <Icon
+            name="mdi-map-marker"
+            size="24"
+            class="text-warning"
+          />.
+        </li>
+        <li>Double click the map.</li>
+        <li>Search for a location.</li>
+      </ul>
+      <p v-if="controlledValues.long && controlledValues.lat">
+        Long : {{ formatNumber(controlledValues.lat) }}, Lat : {{ formatNumber(controlledValues.long) }}
+      </p>
 
       <div class="flex justify-end gap-3">
         <button
@@ -164,6 +228,8 @@ function cancelLeave() {
           Add
         </button>
       </div>
+      <div class="divider" />
+      <AppPlaceSearch @selecte-results="searchResultSelected" />
     </form>
 
     <!-- daisyUI Modal -->

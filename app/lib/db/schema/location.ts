@@ -1,9 +1,11 @@
 import type z from "zod";
 
+import { relations } from "drizzle-orm";
 import { int, real, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 
 import { user } from "./auth";
+import { locationLog } from "./location-log";
 
 export const location = sqliteTable("location", {
   id: int().primaryKey({ autoIncrement: true }),
@@ -18,6 +20,11 @@ export const location = sqliteTable("location", {
 }, t => [
   unique().on(t.name, t.userId),
 ]);
+
+// Setting up relations 1 to *
+export const locationRelation = relations(location, ({ many }) => ({
+  locationLogs: many(locationLog),
+}));
 
 export const locationInsertSchema = createInsertSchema(location, {
   name: field => field.min(3, { message: "Name should be at least 3 characters long" }).max(100, { message: "Name should be at most 100 characters long" }),

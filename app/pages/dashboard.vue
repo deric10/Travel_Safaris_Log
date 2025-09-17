@@ -61,11 +61,11 @@ const sidebarStore = useSidebarStore();
           :key="item.id"
           :label="item.label"
           :icon="item.icon"
-          :href="item.href"
+          :to="item.to"
           :show-label="isSideBarOpen"
           :icon-color="mapStore.selectedPoint === item.location ? 'text-accent' : undefined"
           @mouseenter="mapStore.selectedPoint = item.location ?? null"
-          @mouseleave="mapStore.selectedPoint = null"
+          @mouseleave="mapStore.selectedPoint = item.location ?? null"
         />
       </div>
       <div class="divider" />
@@ -76,8 +76,8 @@ const sidebarStore = useSidebarStore();
         href="#"
       />
     </div>
-    <div class="flex flex-1 justify-center align-middle overflow-auto">
-      <div class="flex flex-col my-3 px-4 gap-4 size-full">
+    <div class="flex flex-1 justify-center align-middle overflow-auto bg-base-200">
+      <div class="flex my-3 size-full" :class="{ 'flex-col px-4 gap-3': route.path !== '/dashboard/add', 'px-5 gap-2': route.path === '/dashboard/add' }">
         <NuxtPage />
         <div class="divider" />
         <AppMap

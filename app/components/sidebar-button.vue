@@ -1,11 +1,14 @@
 <script lang="ts" setup>
+import type { RouteLocationRaw } from "vue-router";
+
 import { useRoute } from "#imports";
 import { computed } from "vue";
 
 const props = withDefaults(defineProps<{
   label: string;
   icon: string;
-  href: string;
+  href?: string;
+  to?: RouteLocationRaw;
   showLabel?: boolean;
   iconColor?: "text-accent" | "text-secondary" | "text-primary";
 }>(), {
@@ -24,7 +27,7 @@ const isActive = computed(() => route.path === props.href);
       :data-tip="!props.showLabel ? props.label : null"
     >
       <NuxtLink
-        :to="props.href"
+        :to="props.to || props.href"
         :aria-current="isActive ? 'page' : undefined"
         class="group flex gap-2 p-3 hover:bg-base-300 hover:cursor-pointer"
         :class="[

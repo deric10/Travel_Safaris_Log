@@ -1,8 +1,26 @@
 <script setup lang="ts">
+import type { MglEvent } from "@indoorequal/vue-maplibre-gl";
+import type { LngLat, MapMouseEvent } from "maplibre-gl";
+
 import { CENTER_TANZANIA, ZOOM_LEVEL } from "~/lib/constants";
 
 const colorMode = useColorMode();
 const mapStore = useMapStore();
+const route = useRoute();
+
+function updateAddedPoint(event: LngLat) {
+  if (mapStore.addedPoint) {
+    mapStore.addedPoint.lat = event.lat;
+    mapStore.addedPoint.long = event.lng;
+  }
+}
+
+function onDoubleClick(mglEvent: MglEvent<"dblclick">) {
+  if (mapStore.addedPoint) {
+    mapStore.addedPoint.lat = mglEvent.event.lngLat.lat;
+    mapStore.addedPoint.long = mglEvent.event.lngLat.lng;
+  }
+}
 
 const style = computed(() => {
   return colorMode.value === "dark"
@@ -20,12 +38,33 @@ onMounted(() => {
     :map-style="style"
     :center="CENTER_TANZANIA"
     :zoom="ZOOM_LEVEL"
+    @map:dblclick="onDoubleClick($event)"
   >
     <MglNavigationControl />
     <MglMarker
+      v-if="mapStore.addedPoint && route.path === '/dashboard/add'"
+      draggable
+      class-name="z-50"
+      :coordinates="[mapStore.addedPoint?.long, mapStore.addedPoint?.lat]"
+      @update:coordinates="updateAddedPoint($event)"
+    >
+      <template #marker>
+        <div
+          class="tooltip tooltip-open"
+          data-tip="Drag to your desired location"
+        >
+          <Icon
+            name="mdi-map-marker"
+            size="30"
+            class="text-warning"
+          />
+        </div>
+      </template>
+    </MglMarker>
+    <MglMarker
       v-for="point in mapStore.mapPoints"
       :key="point.id"
-      :coordinates="[point.lat, point.long]"
+      :coordinates="[point.long, point.lat]"
     >
       <template #marker>
         <div
@@ -33,8 +72,7 @@ onMounted(() => {
           :class="{ 'tooltip-open': mapStore.selectedPoint?.id === point.id }"
           :data-tip="point.name"
           @mouseenter="mapStore.selectPointWithoutFlyTo(point)"
-          @mouseleave="mapStore.selectPointWithoutFlyTo(null)
-          "
+          @mouseleave="mapStore.selectPointWithoutFlyTo(null)"
         >
           <Icon
             name="mdi-map-marker"

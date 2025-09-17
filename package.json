@@ -10,6 +10,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
+    "typecheck": "nuxi typecheck",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
     "drizzle-kit": "^0.31.4",
     "eslint": "^9.33.0",
     "eslint-plugin-format": "^1.0.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vue-tsc": "^3.0.6"
   }
 }
