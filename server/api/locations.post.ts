@@ -3,6 +3,7 @@ import type { DrizzleError } from "drizzle-orm";
 import slugify from "slugify";
 
 import { locationInsertSchema } from "@/lib/db/schema/location";
+import sendZodError from "@/shared/utils/send-zod-error";
 import { findLocationByName, findUniqueSlug, insertLocation } from "~/lib/db/queries/location";
 import defineAuthEventHandler from "~/shared/utils/define-auth-even-thandle";
 
@@ -16,17 +17,7 @@ export default defineAuthEventHandler(async (event) => {
   }
 
   if (!result.success) {
-    const statusMessage = result.error.issues.map(issue => `${issue.path.join(", ")} : ${issue.message}`).join("; ");
-    const data = result.error.issues.reduce((error, issue) => {
-      error[issue.path.join(".")] = issue.message;
-      return error;
-    }, {} as Record<string, string>);
-
-    return sendError(event, createError({
-      statusCode: 400,
-      statusMessage,
-      data,
-    }));
+    return sendZodError(event, result.error);
   }
 
   const existingLocation = await findLocationByName(result.data, event.context.user.id);

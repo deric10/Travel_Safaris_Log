@@ -12,6 +12,7 @@ export const useLocationStore = defineStore("useLocationStore", () => {
         label: loc.name,
         icon: "tabler:map-pin-pin",
         href: `/dashboard/location/${loc.id}`,
+        to: { name: "dashboard-location-slug", params: { slug: loc.slug } },
         location: loc,
       }));
       mapStore.mapPoints = data.value;
