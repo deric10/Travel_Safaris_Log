@@ -7,6 +7,19 @@ type AuthenticatedEvent = H3Event & {
     user: UserWithId;
   };
 };
+/**
+ * defineAuthEventHandler
+ *
+ * Higher-order event handler that enforces authentication for Nitro routes.
+ * - If `event.context.user` is missing, responds with 401 Unauthorized.
+ * - Otherwise, delegates to the provided `handler`.
+ *
+ * Usage:
+ *   export default defineAuthEventHandler((event) => { ... })
+ *
+ * Tip:
+ *   Ensure an auth middleware (e.g., server/middleware/auth.ts) populates `event.context.user`.
+ */
 
 export default function defineAuthEventHandler<T>(handler: (event: AuthenticatedEvent) => T) {
   return defineEventHandler(async (event) => {
@@ -18,4 +31,4 @@ export default function defineAuthEventHandler<T>(handler: (event: Authenticated
     }
     return handler(event as AuthenticatedEvent);
   });
-}
+};

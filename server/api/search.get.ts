@@ -1,5 +1,3 @@
-import z from "zod";
-
 import type { NominatimResults } from "~/lib/types";
 
 import defineAuthEventHandler from "~/shared/utils/define-auth-even-thandle";
@@ -29,8 +27,7 @@ export default defineAuthEventHandler(
         }));
       }
 
-      const results = await response.json() as NominatimResults[];
-      return results;
+      return await response.json() as NominatimResults[];
     }
     catch {
       return sendError(event, createError({
